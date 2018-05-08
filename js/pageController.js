@@ -37,7 +37,7 @@ function postNewOrder() {
     var type = $("#type").find(":selected").val();
     var positionFill = $("#positionFill").find(":selected").val();
 
-    var data = {
+    var orderOptions = {
         units,
         instrument,
         timeInForce,
@@ -46,15 +46,25 @@ function postNewOrder() {
     }
 
     if (type == "LIMIT") {
-        data.price = price;
+        orderOptions.price = price;
     }
 
-    oandaPostOrder(getSelectedInstrumentName(), data, function(response, filled, cancelled) {
+    oandaPostOrder(getSelectedInstrumentName(), orderOptions, function(response, orderId, filled, cancelled) {
         console.log(response);
-        if (cancelled) alert("Order cancelled");
-        if (filled) alert("Order filled");
+        if (cancelled) alert("Order " + orderId + " cancelled");
+        else if (filled) alert("Order " + orderId + " filled");
+        else alert("Order " + orderId + " created")
     })
 
+}
+
+function cancelOrder() {
+    var orderId = $("#cancelOrderId").val();
+
+    oandaCancelOrder(orderId, function(response, cancelled) {
+        console.log(response);
+        if (cancelled) alert("Order " + orderId + " cancelled");
+    })
 }
 
 function getSelectedInstrumentName() {

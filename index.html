@@ -39,6 +39,7 @@
     <br><br><br>
     <div id="chart" style="width: 900px; height: 500px;"></div>
     <br><br>
+    <label>Create Order: </label>
     <input id="units" type="text" value="1">
     <input id="price" type="text" value="1.20">
     <select id="timeInForce">
@@ -53,7 +54,10 @@
         <option value="DEFAULT">Default</option>
     </select>
     <button onclick="postNewOrder();">Post Order</button>
-
+    <br><br>
+    <label>Cancel Order: </label>
+    <input id="cancelOrderId" type="text" value="" placeholder="Order ID">
+    <button onclick="cancelOrder();">Cancel Order</button>
 
   </body>
 </html>

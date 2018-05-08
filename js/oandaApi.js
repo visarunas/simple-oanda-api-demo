@@ -31,9 +31,17 @@ function oandaPostOrder(instrumentName, data, callback) {
     }
 
     httpPost(OANDA_BASE_URL + "/accounts/"+ OANDA_ACCOUNT_ID + "/orders" , headers, requestBody, function(response) {
-        callback(response, response.hasOwnProperty("orderFillTransaction"), response.hasOwnProperty("orderCancelTransaction"));
+        callback(response, response.orderCreateTransaction.id, response.hasOwnProperty("orderFillTransaction"), response.hasOwnProperty("orderCancelTransaction"));
     });
 }   
+
+function oandaCancelOrder(orderId, callback) {
+    var headers = getAuthorizationHeader();
+
+    httpPut(OANDA_BASE_URL + "/accounts/"+ OANDA_ACCOUNT_ID + "/orders/" + orderId + "/cancel" , headers, function(response) {
+        callback(response, response.hasOwnProperty("orderCancelTransaction"));
+    });
+}
 
 
 function getAuthorizationHeader() {

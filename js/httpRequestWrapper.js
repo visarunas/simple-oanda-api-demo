@@ -7,29 +7,11 @@ function httpGet(url, headers, callback) {
         success: function(response){
             callback(response);        
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(textStatus);
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
         }    
     });
 
-    /*
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            callback(xmlHttp.responseText);
-        }
-    }
-
-    xmlHttp.open("GET", url, true); // true for asynchronous 
-
-    for (var key in headers) {
-        if (headers.hasOwnProperty(key)) {
-            xmlHttp.setRequestHeader(key, headers[key]); 
-        }
-    }
-    
-    xmlHttp.send(null);
-    */
 }
 
 function httpPost(url, headers, data, callback) {
@@ -40,11 +22,26 @@ function httpPost(url, headers, data, callback) {
         contentType: "application/json; charset=utf-8",
         headers: headers,
         data: JSON.stringify(data),
+        success: function(response) {
+            callback(response);        
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
+        }    
+    });
+}
+
+function httpPut(url, headers, callback) {
+    $.ajax({
+        type: "PUT",
+        url: url,
+        contentType: "application/json; charset=utf-8",
+        headers: headers,
         success: function(response){
             callback(response);        
         },
-        error: function(jqXHR, textStatus, errorThrown){
-            alert(textStatus);
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
         }    
     });
 }

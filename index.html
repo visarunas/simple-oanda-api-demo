@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script src="/config.js"></script>
+    <script src="/js/httpRequestWrapper.js"></script>
+    <script src="/js/oandaApi.js"></script>
+    <script src="/js/pageController.js"></script>
+  </head>
+  <body>
+    <label>Instrument:</label>
+    <input id="instrument" type="text" value="EUR_USD">
+    <br>
+    <label>Candle Interval:</label>
+    <br>
+    <select id="granularity">
+        <option value="S5">5 Second Candles</option>
+        <option value="M1">1 Minute Candles</option>
+        <option value="H1">1 Hour Candles</option>
+        <option value="D" selected>1 Day Candles</option>
+        <option value="M">1 Month Candles</option>
+    </select>
+    <br>
+    <label>Date:</label>
+    <br>
+    <input id="date" type="text" name="datetimes">
+    <br>
+    <button onclick="loadNewestData(); return false;">Get Newest Data</button>
+    <br>
+    <button onclick="loadHistoricalData(); return false;">Get Data From Date</button>
+    <br><br><br>
+    <div id="chart" style="width: 900px; height: 500px;"></div>
+
+
+  </body>
+</html>

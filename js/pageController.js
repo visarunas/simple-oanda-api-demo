@@ -29,6 +29,34 @@ function loadHistoricalData() {
     oandaGetHistoricalData(getSelectedInstrumentName(), getSelectedGranularity(), fromDate, toDate, displayInstrumentData);
 }
 
+function postNewOrder() {
+    var instrument = getSelectedInstrumentName();
+    var units = $("#units").val();
+    var price = $("#price").val();
+    var timeInForce = $("#timeInForce").find(":selected").val();
+    var type = $("#type").find(":selected").val();
+    var positionFill = $("#positionFill").find(":selected").val();
+
+    var data = {
+        units,
+        instrument,
+        timeInForce,
+        type,
+        positionFill
+    }
+
+    if (type == "LIMIT") {
+        data.price = price;
+    }
+
+    oandaPostOrder(getSelectedInstrumentName(), data, function(response, filled, cancelled) {
+        console.log(response);
+        if (cancelled) alert("Order cancelled");
+        if (filled) alert("Order filled");
+    })
+
+}
+
 function getSelectedInstrumentName() {
     return $("#instrument").val();
 }
@@ -38,8 +66,7 @@ function getSelectedGranularity() {
 }
 
 
-function displayInstrumentData(responseData) {
-    var oandaData = JSON.parse(responseData);
+function displayInstrumentData(oandaData) {
     console.log(oandaData)
 
     var googleFormatData = convertOandaDataToGoogleData(oandaData);

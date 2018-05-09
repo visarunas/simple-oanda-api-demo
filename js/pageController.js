@@ -11,7 +11,6 @@ $(document).ready(function() {
 
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(loadNewestData);
-    
 });
 
 function loadNewestData() {
@@ -64,6 +63,24 @@ function cancelOrder() {
     oandaCancelOrder(orderId, function(response, cancelled) {
         console.log(response);
         if (cancelled) alert("Order " + orderId + " cancelled");
+    })
+}
+
+function closePosition() {
+    var closePositionAmount = $("#closePositionAmount").val();
+    var instrument = getSelectedInstrumentName();
+
+    oandaClosePosition(instrument, closePositionAmount, function(response) {
+        console.log(response);
+    })
+}
+
+function loadCurrentData() {
+    var instrument = getSelectedInstrumentName();
+
+    oandaGetCurrentData(instrument, function(response) {
+        console.log(response);
+        $("#curentPrice").val(response.prices[0].closeoutAsk);
     })
 }
 

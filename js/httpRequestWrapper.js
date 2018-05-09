@@ -31,10 +31,11 @@ function httpPost(url, headers, data, callback) {
     });
 }
 
-function httpPut(url, headers, callback) {
+function httpPut(url, headers, data, callback) {
     $.ajax({
         type: "PUT",
         url: url,
+        data: JSON.stringify(data),
         contentType: "application/json; charset=utf-8",
         headers: headers,
         success: function(response){

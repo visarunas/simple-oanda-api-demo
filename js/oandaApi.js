@@ -35,11 +35,34 @@ function oandaPostOrder(instrumentName, data, callback) {
     });
 }   
 
+function oandaClosePosition(instrument, amount, callback) {
+    var headers = getAuthorizationHeader();
+    
+    var requestBody = {
+        longUnits: amount
+    }
+    
+    httpPut(OANDA_BASE_URL + "/accounts/" + OANDA_ACCOUNT_ID + "/positions/" + instrument + "/close" , headers, requestBody, function(response) {
+        callback(response);
+    });
+}
+
 function oandaCancelOrder(orderId, callback) {
     var headers = getAuthorizationHeader();
 
-    httpPut(OANDA_BASE_URL + "/accounts/"+ OANDA_ACCOUNT_ID + "/orders/" + orderId + "/cancel" , headers, function(response) {
+    httpPut(OANDA_BASE_URL + "/accounts/"+ OANDA_ACCOUNT_ID + "/orders/" + orderId + "/cancel" , headers, {}, function(response) {
         callback(response, response.hasOwnProperty("orderCancelTransaction"));
+    });
+}
+
+function oandaGetCurrentData(instrument, callback) {
+    var headers = getAuthorizationHeader();
+
+    httpGet(OANDA_BASE_URL + "/accounts/" + OANDA_ACCOUNT_ID + "/pricing" 
+        + "?instruments=" + instrument
+        , headers, function(response) 
+    {
+        callback(response);
     });
 }
 
